@@ -9,9 +9,6 @@ myserver.createServer(function(req,res){//http객체로 서버를 만들고, fun
 }
 ).listen(1234);//함수의 설정이 끝났으니, 서버의 몇번 포트를 열어줄지, 설정합니다. 이 예제에서는 1234번 포트를 엽시다.
 
-console.log('http:PI-IP:1234');//어느 포트로 열렷는지 간단하게 표시합니다.
-
-
 app.post('/pushData', function(req, res){
 
 var chunk = '';
@@ -43,3 +40,6 @@ res.write("OK");
 res.end();
 
 });
+
+console.log('http:PI-IP:1234');//어느 포트로 열렷는지 간단하게 표시합니다.
+
