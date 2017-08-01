@@ -51,25 +51,55 @@
 
 var express = require('express');
 var app = express();
-var desk0 = 0, desk1 = 0, desk2 = 0, desk3 = 0;
+//var app = express.createServer();
+var desk = new Array(false,false,false,false);
+var bodyParser = require('body-parser');
+
+//app.use(express.bodyParser());
+
+// app.configure(function(){
+//   app.use(express.bodyParser());
+// });
+
+// app.use(express.json()); 
+
+// app.use(express.urlencoded()); 
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(bodyParser.json());
+
+app.use(express.static('public'));
 
 app.get('/', function (req, res) {
   res.send('Connected!\n' + 
-    desk0+desk1+desk2+desk3);
+    Number(desk[0])+Number(desk[1])
+    +Number(desk[2])+Number(desk[3]) );
   console.log('Someone came here' 
-  	+ '\ndesk0 : ' + desk0
-  	+ '\ndesk1 : ' + desk1
-  	+ '\ndesk2 : ' + desk2
-  	+ '\ndesk3 : ' + desk3);
-
-    desk0++;
+  	+ '\ndesk[0] : ' + desk[0]
+  	+ '\ndesk[1] : ' + desk[1]
+  	+ '\ndesk[2] : ' + desk[2]
+  	+ '\ndesk[3] : ' + desk[3]);
 
 
 });
 
-app.post('/', function(req, res){
-  console.log(req.body);
-//   response.send(req.body);
+app.post('/reservation', function(req, res){
+  console.log("여기까진 들왓서"); 
+  console.log(req.body.desk_num);
+  //console.log(req.method);
+//  console.log(req);
+  res.send(Number(desk[req.body.desk_num]).toString());
+  desk[req.body.desk_num] = !desk[req.body.desk_num];
+
+
+  console.log(
+     '\ndesk[0] : ' + desk[0]
+    + '\ndesk[1] : ' + desk[1]
+    + '\ndesk[2] : ' + desk[2]
+    + '\ndesk[3] : ' + desk[3]);
+
+
 });
 
 
@@ -78,6 +108,35 @@ app.listen(3000, function () {
 });
 
 
+
+// var express = require('express');
+// var app = express.createServer();
+// var desk0 = 0, desk1 = 0, desk2 = 0, desk3 = 0;
+// app.configure(function(){
+//   app.use(express.bodyParser());
+// });
+
+// app.get('/', function (req, res) {
+//   res.send('Connected!\n' + 
+//     desk0+desk1+desk2+desk3);
+//   console.log('Someone came here' 
+//    + '\ndesk0 : ' + desk0
+//    + '\ndesk1 : ' + desk1
+//    + '\ndesk2 : ' + desk2
+//    + '\ndesk3 : ' + desk3);
+
+//     desk0++;
+
+
+// });
+
+// app.post('/ReceiveJSON', function(req, res){
+//   console.log(req.body);
+//   res.send("ok");
+// });
+
+// app.listen(3000);
+// console.log('listening to http://localhost:3000');
 
 // app.post('/current_desk', function(req, res){
 
