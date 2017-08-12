@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/FIre-Hyun/desk_control_node#readme",
   "dependencies": {
-    "express": "^4.15.3"
+    "express": "^4.15.3",
+    "node-bluetooth": "^1.1.3"
   }
 }
