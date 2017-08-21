@@ -36,7 +36,7 @@ app.post('/reservation', function(req, res){
   device.listPairedDevices(console.log);
   if(desk[req.body.desk_num] == 1){
    device
-   .on('finished',  console.log.bind(console, 'finished'))
+   .on('finished',  console.log.bind(console, '=============================='))
    .on('found', function found(address, name){
 
     console.log('Found: ' + address + ' with name ' + name);
@@ -45,6 +45,7 @@ app.post('/reservation', function(req, res){
   device.findSerialPortChannel(address, function(channel){
     console.log('Found RFCOMM channel for serial port on %s: ', name, channel);
 
+    if(name == 'HC-06'){
     // make bluetooth connect to remote device
     bluetooth.connect(address, channel, function(err, connection){
       if(err) return console.error(err);
@@ -57,6 +58,8 @@ app.post('/reservation', function(req, res){
         console.log('wrote');
       });
     });
+
+  }
 
   });
 
