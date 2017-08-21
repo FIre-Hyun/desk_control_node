@@ -29,12 +29,11 @@ app.get('/', function (req, res) {
 
 app.post('/reservation', function(req, res){
   console.log("여기까진 들왓서"); 
-  console.log(req.body.desk_num);
+  console.log(req.body.student_num + "번 학생" + req.body.desk_num + "번 책상");
   res.send(Number(desk[req.body.desk_num]).toString());
   desk[req.body.desk_num] = !desk[req.body.desk_num];
 
   device.listPairedDevices(console.log);
-  if(desk[req.body.desk_num] == 1){
    device
    .on('finished',  console.log.bind(console, '=============================='))
    .on('found', function found(address, name){
@@ -54,8 +53,8 @@ app.post('/reservation', function(req, res){
         console.log('received message:', buffer.toString());
       });
 
-      connection.write(new Buffer('Hello!', 'utf-8'), () => {
-        console.log('wrote');
+      connection.write(new Buffer(desk[req.body.desk_num], 'utf-8'), () => {
+        console.log(desk[req.body.desk_num] + 'wrote');
       });
     });
 
@@ -64,7 +63,6 @@ app.post('/reservation', function(req, res){
   });
 
 }).inquire();
- }
 
  console.log(
    '\ndesk[0] : ' + desk[0]
