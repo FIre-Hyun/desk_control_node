@@ -53,7 +53,7 @@ app.post('/reservation', function(req, res){
         console.log('received message:', buffer.toString());
       });
 
-      connection.write(new Buffer(desk[req.body.desk_num], 'utf-8'), () => {
+      connection.write(new Buffer(desk[req.body.desk_num].toString(), 'utf-8'), () => {
         console.log(desk[req.body.desk_num] + 'wrote');
       });
     });
