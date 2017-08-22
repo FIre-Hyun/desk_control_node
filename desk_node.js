@@ -3,11 +3,8 @@ var express = require('express');
 var app = express();
 var desk = new Array(false,false,false,false);
 var bodyParser = require('body-parser');
+var exec = require('child_process').exec;
 
-
-const bluetooth = require('node-bluetooth'); 
-// create bluetooth device instance 
-const device = new bluetooth.DeviceINQ();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -32,43 +29,17 @@ app.post('/reservation', function(req, res){
   res.send(Number(desk[req.body.desk_num]).toString());
   desk[req.body.desk_num] = !desk[req.body.desk_num];
 
-  device.listPairedDevices(console.log);
-   device
-   .on('finished',  console.log.bind(console, '=============================='))
-   .on('found', function found(address, name){
-
-    console.log('Found: ' + address + ' with name ' + name);
-
-  // find serial port channel
-  device.findSerialPortChannel(address, function(channel){
-    console.log('Found RFCOMM channel for serial port on %s: ', name, channel);
-
-    if(name == 'youngjin'){
-    // make bluetooth connect to remote device
-    bluetooth.connect(address, channel, function(err, connection){
-      if(err) return console.error(err);
-
-      connection.on('data', (buffer) => {
-        console.log('received message:', buffer.toString());
-      });
-
-      connection.write(new Buffer(desk[req.body.desk_num].toString(), 'utf-8'), () => {
-        console.log(desk[req.body.desk_num] + 'wrote');
-      });
-    });
-
-  }
-
-  });
-
-}).inquire();
-
  console.log(
    '\ndesk[0] : ' + desk[0]
    + '\ndesk[1] : ' + desk[1]
    + '\ndesk[2] : ' + desk[2]
    + '\ndesk[3] : ' + desk[3]);
 
+ exec('echo "b">/dev/rfcomm0', function(err, stdout, stderr){
+  if(err){
+    console.log("err");
+  }
+ });
 
 
 
