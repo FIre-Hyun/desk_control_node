@@ -28,7 +28,6 @@ app.get('/', function (req, res) {
 });
 
 app.post('/reservation', function(req, res){
-  console.log("여기까진 들왓서"); 
   console.log(req.body.student_num + "번 학생" + req.body.desk_num + "번 책상");
   res.send(Number(desk[req.body.desk_num]).toString());
   desk[req.body.desk_num] = !desk[req.body.desk_num];
@@ -44,7 +43,7 @@ app.post('/reservation', function(req, res){
   device.findSerialPortChannel(address, function(channel){
     console.log('Found RFCOMM channel for serial port on %s: ', name, channel);
 
-    if(name == 'HC-06'){
+    if(name == 'youngjin'){
     // make bluetooth connect to remote device
     bluetooth.connect(address, channel, function(err, connection){
       if(err) return console.error(err);
