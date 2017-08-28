@@ -36,13 +36,27 @@ app.post('/reservation', function(req, res){
    + '\ndesk[2] : ' + desk[2]
    + '\ndesk[3] : ' + desk[3]);
 
- exec('echo "b">/dev/rfcomm0', function(err, stdout, stderr){
+ if(req.body.desk_kind == "a"){
+  exec('echo "a">/dev/rfcomm0', function(err, stdout, stderr){
   if(err){
-    console.log("err");
+    console.log(req.body.desk_kind + " err");
   }
  });
-
-
+ }
+ else if(req.body.desk_kind == "b"){
+  exec('echo "b">/dev/rfcomm0', function(err, stdout, stderr){
+  if(err){
+    console.log(req.body.desk_kind + " err");
+  }
+ });
+ }
+ else if(req.body.desk_kind == "c"){
+  exec('echo "c">/dev/rfcomm0', function(err, stdout, stderr){
+  if(err){
+    console.log(req.body.desk_kind + " err");
+  }
+ });
+ }
 
 });
 
